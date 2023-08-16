@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.hobber89.androidOpenSpecificFileType'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.hobber89.androidOpenSpecificFileType"
