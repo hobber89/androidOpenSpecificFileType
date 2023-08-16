@@ -25,8 +25,15 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- Based on https://stackoverflow.com/questions/12319279/how-to-open-file-with-custom-extension-using-my-app -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.test" />
+                <data android:host="*" />
             </intent-filter>
 
             <meta-data
