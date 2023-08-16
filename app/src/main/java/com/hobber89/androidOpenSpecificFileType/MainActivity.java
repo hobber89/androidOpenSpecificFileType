@@ -1,10 +1,15 @@
 package com.hobber89.androidOpenSpecificFileType;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import android.os.StrictMode;
+import android.os.storage.StorageManager;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final int ShowContentActivityRequestId = 1;
     private final int LoadFromFileActivityRequestId = 2;
+    private final int PermissionsRequestId = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(view.getId() == R.id.loadFileButton) {
             loadFile();
+        }
+        else if(view.getId() == R.id.loadFileV2Button) {
+            loadFileV2();
         }
     }
 
@@ -103,6 +112,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setType("*/*.test");
         Uri pickerInitialUri = Uri.fromFile(getExternalFilesDir(null));
         intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+        startActivityForResult(intent, LoadFromFileActivityRequestId);
+    }
+
+    private void loadFileV2(){
+        StorageManager sm = (StorageManager) getSystemService(this.STORAGE_SERVICE);
+        Intent intent = sm.getPrimaryStorageVolume().createOpenDocumentTreeIntent();
+        String localDirectoryName = getExternalFilesDir(null).getName();
+
+        Uri uri = intent.getParcelableExtra("android.provider.extra.INITIAL_URI");
+        String scheme = uri.toString();
+        scheme = scheme.replace("/root/", "/document/");
+        String startDir = "Documents";
+        scheme += "%3A" + startDir + "%2F" + localDirectoryName;
+
+        uri = Uri.parse(scheme);
+        intent.putExtra("android.provider.extra.INITIAL_URI", uri);
         startActivityForResult(intent, LoadFromFileActivityRequestId);
     }
 

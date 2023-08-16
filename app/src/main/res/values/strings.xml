@@ -9,5 +9,6 @@
     <string name="infoMessageExampleFileWasCreated">Example file was created</string>
     <string name="loadExampleFileButton">Load example file</string>
     <string name="loadFileButton">Load file</string>
+    <string name="loadFileV2Button">Load file v2</string>
     <string name="title_activity_show_content">File content</string>
 </resources>
