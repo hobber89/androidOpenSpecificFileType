@@ -8,5 +8,6 @@
     <string name="infoMessageExampleFileAlreadyExists">Example file already exists!</string>
     <string name="infoMessageExampleFileWasCreated">Example file was created</string>
     <string name="loadExampleFileButton">Load example file</string>
+    <string name="loadFileButton">Load file</string>
     <string name="title_activity_show_content">File content</string>
 </resources>

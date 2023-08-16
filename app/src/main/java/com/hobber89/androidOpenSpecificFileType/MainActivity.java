@@ -3,7 +3,10 @@ package com.hobber89.androidOpenSpecificFileType;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +21,9 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private final int ShowContentActivityRequestId = 1;
+    private final int LoadFromFileActivityRequestId = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +37,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(view.getId() == R.id.loadExampleFileButton) {
             loadExampleFile();
+        }
+        else if(view.getId() == R.id.loadFileButton) {
+            loadFile();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK)
+            return;
+
+        if(requestCode == LoadFromFileActivityRequestId) {
+            Uri uri = data.getData();
+            String path = uri.getPath();
+
+            //This works at least for the example file when it is copied to Download directory
+            // and is loaded from there (original test file is not visible!)
+            if(path.startsWith("/root/"))
+                path = path.substring(5);
+
+            File file = new File(path);
+            loadFile(file);
         }
     }
 
@@ -68,6 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadFile(file);
     }
 
+    private void loadFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*.test");
+        Uri pickerInitialUri = Uri.fromFile(getExternalFilesDir(null));
+        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+        startActivityForResult(intent, LoadFromFileActivityRequestId);
+    }
+
     private void loadFile(File file) {
         if (file != null) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -85,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Intent intent = new Intent(this, ShowContentActivity.class);
                 intent.putExtra("content", content);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, ShowContentActivityRequestId);
 
             } catch (Exception e) {
                 Toast.makeText(this, R.string.errorMessageFailedToLoadFile, Toast.LENGTH_LONG).show();
