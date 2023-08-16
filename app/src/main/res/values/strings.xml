@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">androidOpenSpecificFileType</string>
+    <string name="createExampleFileButton">createExampleFileButton</string>
+    <string name="errorMessageFailedToCreateExampleFile">Failed to create an example *.test file!</string>
+    <string name="infoMessageExampleFileAlreadyExists">Example file already exists!</string>
+    <string name="infoMessageExampleFileWasCreated">Example file was created</string>
 </resources>
