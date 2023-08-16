@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadFile(file);
     }
 
+    //This variant tries to use filter on listed files, to allow only to see or at least only to open files with extension .test
+    //PROBLEMS: It has no access to the directory in which the test file is saved!
+    //          No file can be opened when filter is set
+    //          Initial path can not be set
     private void loadFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*.test");
@@ -115,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, LoadFromFileActivityRequestId);
     }
 
+    //This variant tries to load a file with StorageManager
+    //PROBLEMS: It has no access to the directory in which the test file is saved
+    //          It allows only to open a directory or open file directly with corresponding default app
     private void loadFileV2(){
         StorageManager sm = (StorageManager) getSystemService(this.STORAGE_SERVICE);
         Intent intent = sm.getPrimaryStorageVolume().createOpenDocumentTreeIntent();
