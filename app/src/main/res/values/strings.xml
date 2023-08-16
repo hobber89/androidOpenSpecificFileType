@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">androidOpenSpecificFileType</string>
     <string name="createExampleFileButton">createExampleFileButton</string>
+    <string name="contentTextView">Content:</string>
+    <string name="errorMessageExampleFileDoesNotExist">Example file does not exist!</string>
     <string name="errorMessageFailedToCreateExampleFile">Failed to create an example *.test file!</string>
+    <string name="errorMessageFailedToLoadFile">Failed to load file!</string>
     <string name="infoMessageExampleFileAlreadyExists">Example file already exists!</string>
     <string name="infoMessageExampleFileWasCreated">Example file was created</string>
+    <string name="loadExampleFileButton">Load example file</string>
+    <string name="title_activity_show_content">File content</string>
 </resources>
